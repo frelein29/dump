@@ -1,0 +1,31 @@
+dist: Bionic
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
+env:
+  - product_filename="*ugglite*.zip" chat_id="-1001378095587"
+install: |
+  sudo apt-get install python3-setuptools python3-pip git flex bison build-essential zip zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libx11-dev ccache libgl1-mesa-dev libxml2-utils xsltproc bc imagemagick libssl-dev mc libncurses5 python
+  sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
+  sudo chmod a+rx /usr/local/bin/repo
+  git clone https://github.com/RomashkaGang/PublishBot ~/PublishBot
+  pip3 install --user -r /home/travis/PublishBot/requirements.txt
+  repo init -u git://github.com/SKYHAWK-Recovery-Project/platform_manifest_twrp_omni.git -b 9.0 --depth=1
+  repo sync
+  git clone https://github.com/frelein29/twrp_device_xiaomi_ugglite device/xiaomi/ugglite -b shrp
+before_script: |
+  python3 /home/travis/PublishBot/main.py --before
+script: |
+  . build/envsetup.sh
+  lunch omni_ugglite-eng
+  mka recoveryimage -j12
+  output_file=$(find ./out/target/product/ugglite/ -name "*ugglite*.zip")
+  if [ -f $output_file ]; then
+    cp $output_file ./
+  else
+    python3 /home/travis/PublishBot/main.py --after
+    exit 1
+  fi
+after_success: |
+  python3 /home/travis/PublishBot/main.py --after
+after_failure: |
+  python3 /home/travis/PublishBot/main.py --after
