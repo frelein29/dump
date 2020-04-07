@@ -4,9 +4,7 @@ notifications:
 env:
   - product_filename="*ugglite*.zip" chat_id="-1001378095587"
 install: |
-  git clone https://github.com/RomashkaGang/PublishBot ~/PublishBot
-  pip3 install --user -r /home/travis/PublishBot/requirements.txt
-  git clone https://github.com/frelein29/twrp_device_xiaomi_ugglite device/xiaomi/ugglite -b shrp
+  git clone https://github.com/RomashkaGang/PublishBot ~/PublishBot && pip3 install --user -r /home/travis/PublishBot/requirements.txt && git clone https://github.com/frelein29/twrp_device_xiaomi_ugglite device/xiaomi/ugglite -b shrp
 before_script: |
   python3 /home/travis/PublishBot/main.py --before
 script: |
