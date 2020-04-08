@@ -15,9 +15,11 @@ install: |
   time repo sync -c -f -q --force-sync --no-clone-bundle --no-tags -j8
   git clone https://github.com/frelein29/twrp_device_xiaomi_ugglite device/xiaomi/ugglite -b shrp
   wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/android-9.0.0_r1/clang-4691093.tar.gz
-  tar xvf clang-4691093.tar.gz
+  mkdir clang-4691093
+  tar xvf clang-4691093.tar.gz --directory clang-4691093
   mkdir -p prebuilts/clang/host/linux-x86/
-  mv clang-4691093 prebuilts/clang/host/linux-x86/
+  cp clang-4691093 prebuilts/clang/host/linux-x86/
+  mv clang-4691093 prebuilts/clang/host/linux-x86/clang-4691093
 before_script: |
   python3 /home/travis/PublishBot/main.py --before
 script: |
