@@ -4,7 +4,7 @@ notifications:
 env:
   - product_filename="*ugglite*.zip" chat_id="-1001378095587"
 install: |
-  sudo apt-get install python3-setuptools python3-pip python3
+  sudo apt-get install python3-setuptools python3-pip python3 python
   wget https://raw.githubusercontent.com/akhilnarang/scripts/master/setup/android_build_env.sh
   sudo chmod +x android_build_env.sh
   sudo ./android_build_env.sh
@@ -18,6 +18,8 @@ before_script: |
   python3 /home/travis/PublishBot/main.py --before
 script: |
   ls -al /proc/self/cwd
+  ls prebuilts/clang/host/linux-x86/
+  ls prebuilts/clang/host/linux-x86/clang-4691093/bin/
   . build/envsetup.sh
   lunch omni_ugglite-eng
   export ALLOW_MISSING_DEPENDENCIES=true
