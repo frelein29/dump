@@ -17,8 +17,10 @@ install: |
   wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/android-9.0.0_r1/clang-4691093.tar.gz
   mkdir clang-4691093
   tar xvf clang-4691093.tar.gz --directory clang-4691093
-  mkdir -p prebuilts/clang/host/linux-x86/
-  cp clang-4691093 prebuilts/clang/host/linux-x86/
+  rm -rf clang-4691093 prebuilts/clang/host/linux-x86/clang-4691093
+  mkdir -p prebuilts/clang/host/linux-x86/clang-4691093
+  cp -rf clang-4691093 prebuilts/clang/host/linux-x86/
+  cp -rf clang-4691093 prebuilts/clang/host/linux-x86/clang-4691093
   mv clang-4691093 prebuilts/clang/host/linux-x86/clang-4691093
 before_script: |
   python3 /home/travis/PublishBot/main.py --before
